@@ -11,7 +11,9 @@ const CampaignsPage = () => {
       <div className="flex-1 flex flex-col">
         <Header />
         <main className="p-6 space-y-6 overflow-y-auto custom-scrollbar">
-          <h2 className="text-3xl font-bold">Campaigns</h2>
+          <div className="flex justify-between items-center">
+            <h2 className="text-3xl font-bold">Campaigns</h2>
+          </div>
           <Campaigns />
         </main>
       </div>

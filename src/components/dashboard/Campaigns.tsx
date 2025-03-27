@@ -4,6 +4,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/table';
 import { Calendar, Phone, Users, Clock, PlusCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 interface Campaign {
   id: string;
@@ -58,11 +60,33 @@ const campaigns: Campaign[] = [
 ];
 
 const Campaigns = () => {
+  const navigate = useNavigate();
+
+  const handleNewCampaign = () => {
+    toast.success("New campaign creation coming soon!", {
+      description: "This feature will be available in the next update.",
+    });
+  };
+
+  const handleCampaignClick = (campaignId: string) => {
+    console.log(`Campaign clicked: ${campaignId}`);
+    toast.info(`Selected campaign #${campaignId}`, {
+      description: "Campaign details view will be available soon.",
+    });
+  };
+
+  const handleStatusChange = (campaignId: string, currentStatus: string) => {
+    const newStatus = currentStatus === 'active' ? 'paused' : 'active';
+    toast.success(`Campaign status updated to ${newStatus}`, {
+      description: `Campaign #${campaignId} status has been changed.`,
+    });
+  };
+
   return (
     <div className="glass-card p-6 animate-fade-in">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-lg font-medium">Active Campaigns</h3>
-        <Button size="sm" className="gap-1">
+        <Button size="sm" className="gap-1" onClick={handleNewCampaign}>
           <PlusCircle size={16} />
           New Campaign
         </Button>
@@ -82,13 +106,24 @@ const Campaigns = () => {
           </TableHeader>
           <TableBody>
             {campaigns.map((campaign) => (
-              <TableRow key={campaign.id} className="hover-scale">
+              <TableRow 
+                key={campaign.id} 
+                className="hover-scale cursor-pointer" 
+                onClick={() => handleCampaignClick(campaign.id)}
+              >
                 <TableCell className="font-medium">{campaign.name}</TableCell>
                 <TableCell>
-                  <Badge variant={
-                    campaign.status === 'active' ? 'default' : 
-                    campaign.status === 'paused' ? 'secondary' : 'outline'
-                  }>
+                  <Badge 
+                    variant={
+                      campaign.status === 'active' ? 'default' : 
+                      campaign.status === 'paused' ? 'secondary' : 'outline'
+                    }
+                    className="cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleStatusChange(campaign.id, campaign.status);
+                    }}
+                  >
                     {campaign.status.charAt(0).toUpperCase() + campaign.status.slice(1)}
                   </Badge>
                 </TableCell>

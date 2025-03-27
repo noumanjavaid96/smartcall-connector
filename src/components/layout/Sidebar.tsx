@@ -2,31 +2,32 @@
 import React, { useState } from 'react';
 import { Home, Phone, Calendar, PieChart, Settings, ChevronRight, ChevronLeft } from 'lucide-react';
 import { cn } from "@/lib/utils";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const MenuItem = ({ 
   icon: Icon, 
   label, 
   to,
-  active = false, 
   collapsed = false 
 }: { 
   icon: React.ElementType; 
   label: string; 
   to: string;
-  active?: boolean; 
   collapsed?: boolean 
 }) => {
+  const location = useLocation();
+  const isActive = location.pathname === to;
+  
   return (
     <li>
       <Link 
         to={to}
         className={cn(
           "flex items-center px-3 py-3 rounded-xl transition-all group",
-          active ? "bg-primary text-primary-foreground" : "hover:bg-secondary text-foreground"
+          isActive ? "bg-primary text-primary-foreground" : "hover:bg-secondary text-foreground"
         )}
       >
-        <Icon className={cn("h-5 w-5", active ? "" : "text-muted-foreground group-hover:text-foreground")} />
+        <Icon className={cn("h-5 w-5", isActive ? "" : "text-muted-foreground group-hover:text-foreground")} />
         {!collapsed && (
           <span className={cn("ml-3 text-sm font-medium transition-opacity duration-300", collapsed ? "opacity-0" : "opacity-100")}>
             {label}
@@ -53,6 +54,7 @@ const Sidebar = () => {
           <button 
             onClick={() => setCollapsed(!collapsed)} 
             className="p-1 rounded-full hover:bg-secondary transition-colors"
+            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
             {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
           </button>
@@ -60,7 +62,7 @@ const Sidebar = () => {
         
         <nav>
           <ul className="space-y-1">
-            <MenuItem icon={Home} label="Dashboard" to="/" active collapsed={collapsed} />
+            <MenuItem icon={Home} label="Dashboard" to="/" collapsed={collapsed} />
             <MenuItem icon={Phone} label="Campaigns" to="/campaigns" collapsed={collapsed} />
             <MenuItem icon={Calendar} label="Meetings" to="/meetings" collapsed={collapsed} />
             <MenuItem icon={PieChart} label="Analytics" to="/analytics" collapsed={collapsed} />
