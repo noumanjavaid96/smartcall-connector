@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import Sidebar from '@/components/layout/Sidebar';
 import StatCard from '@/components/dashboard/StatCard';
 import CallFlow from '@/components/dashboard/CallFlow';
+import Campaigns from '@/components/dashboard/Campaigns';
 import { Phone, Calendar, PieChart } from 'lucide-react';
 
 const Index = () => {
@@ -33,6 +34,8 @@ const Index = () => {
               trend={{ value: 5.2, positive: false }}
             />
           </div>
+
+          <Campaigns />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <CallFlow />
