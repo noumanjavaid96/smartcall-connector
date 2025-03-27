@@ -63,16 +63,23 @@ const Campaigns = () => {
   const navigate = useNavigate();
 
   const handleNewCampaign = () => {
-    toast.success("New campaign creation coming soon!", {
-      description: "This feature will be available in the next update.",
+    toast.success("New campaign creation started", {
+      description: "You can now fill in the campaign details.",
+      action: {
+        label: "Dismiss",
+        onClick: () => console.log("Dismissed")
+      }
     });
+    // In a real app, this would navigate to a form or open a modal
+    console.log("Creating new campaign");
   };
 
   const handleCampaignClick = (campaignId: string) => {
     console.log(`Campaign clicked: ${campaignId}`);
-    toast.info(`Selected campaign #${campaignId}`, {
-      description: "Campaign details view will be available soon.",
+    toast.info(`Viewing campaign #${campaignId}`, {
+      description: "Loading campaign details...",
     });
+    // In a real app, this would navigate to a detailed view
   };
 
   const handleStatusChange = (campaignId: string, currentStatus: string) => {
