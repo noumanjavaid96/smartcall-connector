@@ -2,22 +2,25 @@
 import React, { useState } from 'react';
 import { Home, Phone, Calendar, PieChart, Settings, ChevronRight, ChevronLeft } from 'lucide-react';
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 const MenuItem = ({ 
   icon: Icon, 
   label, 
+  to,
   active = false, 
   collapsed = false 
 }: { 
   icon: React.ElementType; 
   label: string; 
+  to: string;
   active?: boolean; 
   collapsed?: boolean 
 }) => {
   return (
     <li>
-      <a 
-        href="#" 
+      <Link 
+        to={to}
         className={cn(
           "flex items-center px-3 py-3 rounded-xl transition-all group",
           active ? "bg-primary text-primary-foreground" : "hover:bg-secondary text-foreground"
@@ -29,7 +32,7 @@ const MenuItem = ({
             {label}
           </span>
         )}
-      </a>
+      </Link>
     </li>
   );
 };
@@ -57,11 +60,11 @@ const Sidebar = () => {
         
         <nav>
           <ul className="space-y-1">
-            <MenuItem icon={Home} label="Dashboard" active collapsed={collapsed} />
-            <MenuItem icon={Phone} label="Campaigns" collapsed={collapsed} />
-            <MenuItem icon={Calendar} label="Meetings" collapsed={collapsed} />
-            <MenuItem icon={PieChart} label="Analytics" collapsed={collapsed} />
-            <MenuItem icon={Settings} label="Settings" collapsed={collapsed} />
+            <MenuItem icon={Home} label="Dashboard" to="/" active collapsed={collapsed} />
+            <MenuItem icon={Phone} label="Campaigns" to="/campaigns" collapsed={collapsed} />
+            <MenuItem icon={Calendar} label="Meetings" to="/meetings" collapsed={collapsed} />
+            <MenuItem icon={PieChart} label="Analytics" to="/analytics" collapsed={collapsed} />
+            <MenuItem icon={Settings} label="Settings" to="/settings" collapsed={collapsed} />
           </ul>
         </nav>
       </div>
